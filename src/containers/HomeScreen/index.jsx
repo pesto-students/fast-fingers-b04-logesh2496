@@ -28,7 +28,7 @@ const HomeScreen = () => {
       <div className="difficulty-chooser">
         <select
           onChange={(e) =>
-            dispatch(setUserUserProperties(userName, e.target.value))
+            dispatch(setUserUserProperties(userName, parseInt(e.target.value)))
           }
         >
           <option value={DifficultyLevel.EASY}>EASY</option>

@@ -25,8 +25,12 @@
     }
     .stop-game {
       color: $font-color;
-      margin-top: 20px;
+      margin-top: 45px;
       cursor: pointer;
+      .close-icon {
+        font-weight: 500;
+        font-size: 22px;
+      }
     }
   }
   .game-play {
@@ -35,14 +39,41 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    input {
+      height: 50px;
+      width: 30%;
+      margin-top: 10px;
+      text-align: center;
+      font-family: Breamcatcher;
+      font-size: 35px;
+      color: #032228;
+      border-radius: 15px;
+      box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
+      border: none;
+      outline: none;
+      opacity: 0.59;
+    }
     .game-word,
     .game-timer {
-      font-size: 20px;
+      text-shadow: 0 0 16px rgba(0, 0, 0, 0.16);
+      font-family: Gotham;
+      font-size: 92px;
+      font-weight: 500;
       color: white;
+    }
+    .game-word {
+      .match {
+        color: #54ba18;
+      }
+      .not-match {
+        color: #445298;
+      }
     }
   }
   .game-score {
     width: 25%;
     color: $font-color;
+    font-family: LaserCorpsGradient;
+    font-size: 56px;
   }
 }

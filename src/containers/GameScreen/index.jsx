@@ -4,6 +4,8 @@ import "./game-screen.scss";
 import PlayerInfo from "../../components/PlayerInfo";
 import { DifficultyLevel, screenInfo } from "../../helpers/enums";
 import { setUserScreen, setUserUserProperties } from "../../actions";
+import RenderWords from "../../components/RenderWords";
+import GameScore from "../../components/GameScore";
 const words = require("../../dictionary.json");
 
 const GameScreen = () => {
@@ -27,7 +29,8 @@ const GameScreen = () => {
     }
   };
   const calculateAndSetWord = () => {
-    const arrIndex = Math.floor(Math.random() * 100 + 1);
+    debugger;
+    const arrIndex = Math.floor(Math.random() * 172820 + 1);
     const wordFromLibrary = words[arrIndex];
     setWord(wordFromLibrary);
     setTimer(Math.round(wordFromLibrary.length / difficultyFactor));
@@ -50,13 +53,13 @@ const GameScreen = () => {
   };
   const handleTimerTick = () => {
     if (timer === 0) {
-      alert("Game ended");
+      // alert("Game ended");
     } else if (timer > 0) {
       setTimer(timer - 1);
     }
   };
   useEffect(() => {
-    calculateAndSetWord();
+    difficultyFactor && calculateAndSetWord();
     if (difficultyFactor === 1.5) {
       //TODO promoted to medium
     } else if (difficultyFactor === 2) {
@@ -84,12 +87,14 @@ const GameScreen = () => {
           <div className="header">SCORE BOARD</div>
         </div>
         <div className="stop-game" onClick={onStopGame} tabIndex={0}>
-          x STOP GAME
+          <span className={"close-icon"}>x</span> STOP GAME
         </div>
       </div>
       <div className="game-play">
         <div className="game-timer">{timer}</div>
-        <div className="game-word">{word}</div>
+        <div className="game-word">
+          <RenderWords word={word} inputWord={inputWord} />
+        </div>
         <input
           autoFocus
           onChange={handleWordInputChange}
@@ -97,8 +102,7 @@ const GameScreen = () => {
         ></input>
       </div>
       <div className="game-score">
-        <div>fast fingers</div>
-        <div>SCORE: {userScore}</div>
+        <GameScore score={userScore} />
       </div>
     </div>
   );
