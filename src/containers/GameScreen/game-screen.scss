@@ -2,24 +2,47 @@
 
 .game-screen {
   display: flex;
+  justify-content: center;
   height: 100%;
   .game-info {
+    width: 25%;
+    padding: 30px;
     .player-info {
+      font-size: 30px;
       color: $font-color;
     }
     .score-board {
       height: 60%;
-      border: 1px solid $font-color;
+      border: 2px solid $font-color;
       padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      .header {
+        color: $font-color;
+      }
     }
     .stop-game {
       color: $font-color;
       margin-top: 20px;
+      cursor: pointer;
     }
   }
   .game-play {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .game-word,
+    .game-timer {
+      font-size: 20px;
+      color: white;
+    }
   }
   .game-score {
+    width: 25%;
     color: $font-color;
   }
 }
