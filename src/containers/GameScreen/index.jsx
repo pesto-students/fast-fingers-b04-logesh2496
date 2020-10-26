@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./game-screen.scss";
 import PlayerInfo from "../../components/PlayerInfo";
 import { DifficultyLevel, screenInfo } from "../../helpers/enums";
-import {
-  setUserScreen,
-  setUserProperties,
-  setUserHistory,
-} from "../../actions";
+import { setUserScreen, setUserHistory } from "../../actions";
 import RenderWords from "../../components/RenderWords";
 import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
@@ -53,6 +49,8 @@ const GameScreen = () => {
       case DifficultyLevel.HARD:
         setDifficultyFactor(2);
         break;
+      default:
+        break;
     }
   };
   const onStopGame = () => {
@@ -97,16 +95,16 @@ const GameScreen = () => {
     } else if (difficultyFactor === 2.5) {
       alert("Congrats, you have completed the challenge!!!");
     }
-  }, [difficultyFactor]);
+  }, [difficultyFactor]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     calculateAndDifficultyFactor();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     const timerEvent = setInterval(handleTimerTick, 1000);
     return () => {
       clearTimeout(timerEvent);
     };
-  }, [timer]);
+  }, [timer]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className="game-screen">
       <div className="game-info">

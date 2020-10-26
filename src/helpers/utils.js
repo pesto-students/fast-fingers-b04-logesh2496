@@ -8,5 +8,7 @@ export const getDifficultyValue = difficultyLevel => {
             return "MEDIUM";
         case DifficultyLevel.HARD:
             return "Hard";
+        default:
+            return;
     }
 }
