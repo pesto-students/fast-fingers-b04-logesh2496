@@ -1,0 +1,25 @@
+@import "../../variables";
+
+.game-screen {
+  display: flex;
+  height: 100%;
+  .game-info {
+    .player-info {
+      color: $font-color;
+    }
+    .score-board {
+      height: 60%;
+      border: 1px solid $font-color;
+      padding: 10px;
+    }
+    .stop-game {
+      color: $font-color;
+      margin-top: 20px;
+    }
+  }
+  .game-play {
+  }
+  .game-score {
+    color: $font-color;
+  }
+}

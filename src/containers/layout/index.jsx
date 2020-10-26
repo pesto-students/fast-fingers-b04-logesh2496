@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { screenInfo } from "../../helpers/enums";
 import GameScreen from "../GameScreen";
 import HomeScreen from "../HomeScreen";
-import "./layout.css";
+import "./layout.scss";
 
 const Layout = () => {
-  const currentUserScreen = useSelector((state) => state.currentUserScreen);
+  const currentUserScreen = useSelector(
+    (state) => state.currentUserScreen.value
+  );
   const renderContent = () => {
     switch (currentUserScreen) {
       case screenInfo.GAME:
