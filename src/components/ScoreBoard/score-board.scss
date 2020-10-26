@@ -1,0 +1,23 @@
+@import "../../variables";
+
+.score-board {
+  .header {
+    color: $font-color;
+  }
+  .scrollable {
+    max-height: 100%;
+    overflow: auto;
+    .history-info {
+      color: white;
+      font-family: Gotham;
+      font-size: 30px;
+      .best {
+        font-family: Gotham;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: $font-color;
+        text-align: left;
+      }
+    }
+  }
+}

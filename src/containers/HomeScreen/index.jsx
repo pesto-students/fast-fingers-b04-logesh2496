@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserScreen, setUserUserProperties } from "../../actions";
+import { setUserScreen, setUserProperties } from "../../actions";
 import { DifficultyLevel, screenInfo } from "../../helpers/enums";
 import "./home-screen.scss";
 
@@ -21,14 +21,14 @@ const HomeScreen = () => {
         <input
           placeholder="TYPE YOUR NAME"
           onBlur={(e) =>
-            dispatch(setUserUserProperties(e.target.value, difficultyLevel))
+            dispatch(setUserProperties(e.target.value, difficultyLevel))
           }
         ></input>
       </div>
       <div className="difficulty-chooser">
         <select
           onChange={(e) =>
-            dispatch(setUserUserProperties(userName, parseInt(e.target.value)))
+            dispatch(setUserProperties(userName, parseInt(e.target.value)))
           }
         >
           <option value={DifficultyLevel.EASY}>EASY</option>

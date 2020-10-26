@@ -3,15 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import "./game-screen.scss";
 import PlayerInfo from "../../components/PlayerInfo";
 import { DifficultyLevel, screenInfo } from "../../helpers/enums";
-import { setUserScreen, setUserUserProperties } from "../../actions";
+import {
+  setUserScreen,
+  setUserProperties,
+  setUserHistory,
+} from "../../actions";
 import RenderWords from "../../components/RenderWords";
 import GameScore from "../../components/GameScore";
+import ScoreBoard from "../../components/ScoreBoard";
 const words = require("../../dictionary.json");
 
 const GameScreen = () => {
   const { difficultyLevel, userName } = useSelector(
     (state) => state.userProperties
   );
+  const userHistory = useSelector((state) => state.userHistory);
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
   const [inputWord, setInputWord] = useState("");
@@ -29,7 +35,6 @@ const GameScreen = () => {
     }
   };
   const calculateAndSetWord = () => {
-    debugger;
     const arrIndex = Math.floor(Math.random() * 172820 + 1);
     const wordFromLibrary = words[arrIndex];
     setWord(wordFromLibrary);
@@ -53,7 +58,9 @@ const GameScreen = () => {
   };
   const handleTimerTick = () => {
     if (timer === 0) {
-      // alert("Game ended");
+      dispatch(
+        setUserHistory(userHistory.concat({ name: userName, score: userScore }))
+      );
     } else if (timer > 0) {
       setTimer(timer - 1);
     }
@@ -84,7 +91,7 @@ const GameScreen = () => {
           <PlayerInfo name={userName} level={difficultyLevel} />
         </div>
         <div className="score-board">
-          <div className="header">SCORE BOARD</div>
+          <ScoreBoard history={userHistory} />
         </div>
         <div className="stop-game" onClick={onStopGame} tabIndex={0}>
           <span className={"close-icon"}>x</span> STOP GAME

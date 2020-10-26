@@ -16,12 +16,8 @@
       border: 2px solid $font-color;
       padding: 10px;
       border-radius: 6px;
-      display: flex;
-      justify-content: center;
+      text-align: center;
       margin-top: 30px;
-      .header {
-        color: $font-color;
-      }
     }
     .stop-game {
       color: $font-color;

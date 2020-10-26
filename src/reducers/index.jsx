@@ -15,8 +15,14 @@ const userProperties = (store, action) => {
   }
   return store || { difficultyLevel: DifficultyLevel.EASY, userName: "YOLO" };
 };
-
+const userHistory = (store, action) => {
+  if (action.type === "USER_HISTORY") {
+    return action.value;
+  }
+  return store || [];
+};
 export default combineReducers({
   currentUserScreen,
   userProperties,
+  userHistory,
 });
