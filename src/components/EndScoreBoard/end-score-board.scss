@@ -1,0 +1,31 @@
+@import "../../variables";
+
+.end-score-board {
+  font-family: Gotham;
+  color: white;
+  text-transform: uppercase;
+  .game-no {
+    font-size: 70px;
+    font-weight: 500;
+  }
+  .end-score {
+    font-size: 118px;
+    font-weight: 500;
+  }
+  .new-high {
+    font-size: 53px;
+    font-weight: normal;
+  }
+  .play-again {
+    color: $font-color;
+    text-shadow: 0 0 16px rgba(0, 0, 0, 0.16);
+    font-size: 54px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    img {
+      margin-right: 25px;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import React from "react";
 
-const GameScore = ({ score }) => {
+const GameScore = ({ score, isGameEnded }) => {
   return (
     <>
       <div>fast fingers</div>
-      <div className={"score"}>SCORE: {score}</div>
+      {!isGameEnded && <div className={"score"}>SCORE: {score}</div>}
     </>
   );
 };

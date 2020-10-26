@@ -11,6 +11,7 @@ import {
 import RenderWords from "../../components/RenderWords";
 import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
+import EndScoreBoard from "../../components/EndScoreBoard";
 const words = require("../../dictionary.json");
 
 const GameScreen = () => {
@@ -24,6 +25,7 @@ const GameScreen = () => {
   const [timer, setTimer] = useState(null);
   const [difficultyFactor, setDifficultyFactor] = useState(null);
   const [userScore, setUserScore] = useState(0);
+  const [isGameEnded, setIsGameEnded] = useState(false);
 
   const handleWordInputChange = (e) => {
     if (word === e.target.value) {
@@ -54,16 +56,37 @@ const GameScreen = () => {
     }
   };
   const onStopGame = () => {
+    dispatch(
+      setUserHistory(userHistory.concat({ name: userName, score: userScore }))
+    );
     dispatch(setUserScreen(screenInfo.HOME));
   };
   const handleTimerTick = () => {
     if (timer === 0) {
-      dispatch(
-        setUserHistory(userHistory.concat({ name: userName, score: userScore }))
-      );
+      setIsGameEnded(true);
     } else if (timer > 0) {
       setTimer(timer - 1);
     }
+  };
+  const onPlayAgain = () => {
+    resetGameState();
+  };
+  const checkIfHighScore = () => {
+    if (!userHistory.length) {
+      return true;
+    }
+    return userHistory.some(({ name, score }) => userScore > score);
+  };
+  const resetGameState = () => {
+    dispatch(
+      setUserHistory(userHistory.concat({ name: userName, score: userScore }))
+    );
+    setIsGameEnded(false);
+    setTimer(null);
+    setWord("");
+    setInputWord("");
+    setUserScore(0);
+    setTimeout(() => calculateAndDifficultyFactor(), 0);
   };
   useEffect(() => {
     difficultyFactor && calculateAndSetWord();
@@ -72,7 +95,7 @@ const GameScreen = () => {
     } else if (difficultyFactor === 2) {
       //TODO promoted to hard
     } else if (difficultyFactor === 2.5) {
-      //TODO end game
+      alert("Congrats, you have completed the challenge!!!");
     }
   }, [difficultyFactor]);
   useEffect(() => {
@@ -90,26 +113,45 @@ const GameScreen = () => {
         <div className="player-info">
           <PlayerInfo name={userName} level={difficultyLevel} />
         </div>
-        <div className="score-board">
-          <ScoreBoard history={userHistory} />
-        </div>
-        <div className="stop-game" onClick={onStopGame} tabIndex={0}>
-          <span className={"close-icon"}>x</span> STOP GAME
-        </div>
+        {!isGameEnded && (
+          <div className="score-board">
+            <ScoreBoard history={userHistory} />
+          </div>
+        )}
+        {isGameEnded ? (
+          <div className="quit" onClick={onStopGame}>
+            Quit
+          </div>
+        ) : (
+          <div className="stop-game" onClick={onStopGame} tabIndex={0}>
+            <span className={"close-icon"}>x</span> STOP GAME
+          </div>
+        )}
       </div>
       <div className="game-play">
-        <div className="game-timer">{timer}</div>
-        <div className="game-word">
-          <RenderWords word={word} inputWord={inputWord} />
-        </div>
-        <input
-          autoFocus
-          onChange={handleWordInputChange}
-          value={inputWord}
-        ></input>
+        {isGameEnded ? (
+          <EndScoreBoard
+            gameNo={userHistory.length + 1}
+            score={userScore}
+            isNewHighScore={checkIfHighScore()}
+            onPlayAgain={onPlayAgain}
+          />
+        ) : (
+          <>
+            <div className="game-timer">{timer}</div>
+            <div className="game-word">
+              <RenderWords word={word} inputWord={inputWord} />
+            </div>
+            <input
+              autoFocus
+              onChange={handleWordInputChange}
+              value={inputWord}
+            ></input>
+          </>
+        )}
       </div>
       <div className="game-score">
-        <GameScore score={userScore} />
+        <GameScore score={userScore} isGameEnded={isGameEnded} />
       </div>
     </div>
   );
