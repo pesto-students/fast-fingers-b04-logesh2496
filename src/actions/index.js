@@ -4,3 +4,9 @@ export const setUserScreen = value => {
         value
     }
 }
+export const setUserUserProperties = (userName, difficultyLevel) => {
+    return {
+        type: "USER_PROPERTIES",
+        value: { userName, difficultyLevel }
+    }
+}
