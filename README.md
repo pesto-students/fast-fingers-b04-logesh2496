@@ -3,6 +3,8 @@
 Pesto Tech is proudly launching its own speed typing game named **Fast fingers**. You have been awarded with the project and you need to design and develop this project which should
 meet the requirements mentioned in the MVP below.
 
+## [Deployed application link here!](https://5f96ff7bcaf41349350c5047--brave-mcnulty-e81a95.netlify.app/)
+
 ## MVP Requirement
 
 1. Ask player to enter his/her name before starting the game.

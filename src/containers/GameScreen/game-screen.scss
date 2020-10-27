@@ -1,0 +1,82 @@
+@import "../../variables";
+
+.game-screen {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  .game-info {
+    width: 25%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    .quit {
+      margin-top: auto;
+      color: $font-color;
+      cursor: pointer;
+    }
+    .player-info {
+      font-size: 30px;
+      color: $font-color;
+    }
+    .score-board {
+      height: 60%;
+      border: 2px solid $font-color;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      margin-top: 30px;
+    }
+    .stop-game {
+      color: $font-color;
+      margin-top: 45px;
+      cursor: pointer;
+      .close-icon {
+        font-weight: 500;
+        font-size: 22px;
+      }
+    }
+  }
+  .game-play {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    input {
+      height: 50px;
+      width: 30%;
+      margin-top: 10px;
+      text-align: center;
+      font-family: Breamcatcher;
+      font-size: 35px;
+      color: #032228;
+      border-radius: 15px;
+      box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
+      border: none;
+      outline: none;
+      opacity: 0.59;
+    }
+    .game-word,
+    .game-timer {
+      text-shadow: 0 0 16px rgba(0, 0, 0, 0.16);
+      font-family: Gotham;
+      font-size: 92px;
+      font-weight: 500;
+      color: white;
+    }
+    .game-word {
+      .match {
+        color: #54ba18;
+      }
+      .not-match {
+        color: #445298;
+      }
+    }
+  }
+  .game-score {
+    width: 25%;
+    color: $font-color;
+    font-family: LaserCorpsGradient;
+    font-size: 56px;
+  }
+}

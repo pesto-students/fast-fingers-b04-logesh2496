@@ -1,0 +1,9 @@
+Redux properties
+    Name
+    Difficulty Level
+    Game Count
+
+    Previous Game scores
+        Game Count
+        Score
+        Personal best
