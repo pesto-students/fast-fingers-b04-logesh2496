@@ -36,7 +36,16 @@ const HomeScreen = () => {
           <option value={DifficultyLevel.HARD}>HARD</option>
         </select>
       </div>
-      <div className="start-game" tabIndex={0} onClick={handleStartGame}>
+      <div
+        className="start-game"
+        tabIndex={0}
+        onClick={handleStartGame}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleStartGame();
+          }
+        }}
+      >
         <div className="play-icon"></div>
         START GAME
       </div>

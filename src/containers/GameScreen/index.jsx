@@ -8,6 +8,7 @@ import RenderWords from "../../components/RenderWords";
 import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
 import EndScoreBoard from "../../components/EndScoreBoard";
+import Timer from "../../components/Timer";
 const words = require("../../dictionary.json");
 
 const GameScreen = () => {
@@ -19,6 +20,7 @@ const GameScreen = () => {
   const [word, setWord] = useState("");
   const [inputWord, setInputWord] = useState("");
   const [timer, setTimer] = useState(null);
+  const [totalTime, setTotalTime] = useState(null);
   const [difficultyFactor, setDifficultyFactor] = useState(null);
   const [userScore, setUserScore] = useState(0);
   const [isGameEnded, setIsGameEnded] = useState(false);
@@ -36,7 +38,12 @@ const GameScreen = () => {
     const arrIndex = Math.floor(Math.random() * 172820 + 1);
     const wordFromLibrary = words[arrIndex];
     setWord(wordFromLibrary);
-    setTimer(Math.round(wordFromLibrary.length / difficultyFactor));
+    const calculatedTime = Math.round(
+      wordFromLibrary.length / difficultyFactor
+    );
+    const finalTime = calculatedTime > 2 ? calculatedTime : 2;
+    setTimer(finalTime);
+    setTotalTime(finalTime);
   };
   const calculateAndDifficultyFactor = () => {
     switch (difficultyLevel) {
@@ -84,6 +91,7 @@ const GameScreen = () => {
     setWord("");
     setInputWord("");
     setUserScore(0);
+    setDifficultyFactor(null);
     setTimeout(() => calculateAndDifficultyFactor(), 0);
   };
   useEffect(() => {
@@ -136,7 +144,9 @@ const GameScreen = () => {
           />
         ) : (
           <>
-            <div className="game-timer">{timer}</div>
+            <div className="game-timer">
+              <Timer timer={timer} totalTime={totalTime} />
+            </div>
             <div className="game-word">
               <RenderWords word={word} inputWord={inputWord} />
             </div>
