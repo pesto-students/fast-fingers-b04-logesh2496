@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./game-screen.scss";
 import PlayerInfo from "../../components/PlayerInfo";
-import { DifficultyLevel, screenInfo } from "../../helpers/enums";
+import {
+  DifficultyLevel,
+  LocalStorageIds,
+  screenInfo,
+} from "../../helpers/enums";
 import { setUserScreen, setUserHistory } from "../../actions";
 import RenderWords from "../../components/RenderWords";
 import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
 import EndScoreBoard from "../../components/EndScoreBoard";
 import Timer from "../../components/Timer";
+import { getFromLocalStorage, setInLocalStorage } from "../../helpers/utils";
 const words = require("../../dictionary.json");
 
 const GameScreen = () => {
@@ -16,6 +21,8 @@ const GameScreen = () => {
     (state) => state.userProperties
   );
   const userHistory = useSelector((state) => state.userHistory);
+  const userHistoryFromDb =
+    getFromLocalStorage(LocalStorageIds.HISTORY) || userHistory;
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
   const [inputWord, setInputWord] = useState("");
@@ -61,10 +68,13 @@ const GameScreen = () => {
     }
   };
   const onStopGame = () => {
-    dispatch(
-      setUserHistory(userHistory.concat({ name: userName, score: userScore }))
-    );
+    const newHistory = userHistoryFromDb.concat({
+      name: userName,
+      score: userScore,
+    });
+    dispatch(setUserHistory(newHistory));
     dispatch(setUserScreen(screenInfo.HOME));
+    setInLocalStorage(newHistory);
   };
   const handleTimerTick = () => {
     if (timer === 0) {
@@ -77,15 +87,18 @@ const GameScreen = () => {
     resetGameState();
   };
   const checkIfHighScore = () => {
-    if (!userHistory.length) {
+    if (!userHistoryFromDb.length) {
       return true;
     }
-    return userHistory.some(({ name, score }) => userScore > score);
+    return userHistoryFromDb.some(({ name, score }) => userScore > score);
   };
   const resetGameState = () => {
-    dispatch(
-      setUserHistory(userHistory.concat({ name: userName, score: userScore }))
-    );
+    const newHistory = userHistoryFromDb.concat({
+      name: userName,
+      score: userScore,
+    });
+    dispatch(setUserHistory(newHistory));
+    setInLocalStorage(newHistory);
     setIsGameEnded(false);
     setTimer(null);
     setWord("");
@@ -121,7 +134,7 @@ const GameScreen = () => {
         </div>
         {!isGameEnded && (
           <div className="score-board">
-            <ScoreBoard history={userHistory} />
+            <ScoreBoard history={userHistoryFromDb} />
           </div>
         )}
         {isGameEnded ? (
@@ -137,7 +150,7 @@ const GameScreen = () => {
       <div className="game-play">
         {isGameEnded ? (
           <EndScoreBoard
-            gameNo={userHistory.length + 1}
+            gameNo={userHistoryFromDb.length + 1}
             score={userScore}
             isNewHighScore={checkIfHighScore()}
             onPlayAgain={onPlayAgain}
