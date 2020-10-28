@@ -68,13 +68,16 @@ const GameScreen = () => {
     }
   };
   const onStopGame = () => {
+    setIsGameEnded(true);
+  };
+  const onQuitGame = () => {
     const newHistory = userHistoryFromDb.concat({
       name: userName,
       score: userScore,
     });
     dispatch(setUserHistory(newHistory));
-    dispatch(setUserScreen(screenInfo.HOME));
     setInLocalStorage(newHistory);
+    dispatch(setUserScreen(screenInfo.HOME));
   };
   const handleTimerTick = () => {
     if (timer === 0) {
@@ -138,7 +141,7 @@ const GameScreen = () => {
           </div>
         )}
         {isGameEnded ? (
-          <div className="quit" onClick={onStopGame}>
+          <div className="quit" onClick={onQuitGame}>
             Quit
           </div>
         ) : (
