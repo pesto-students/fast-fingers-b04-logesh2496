@@ -1,10 +1,13 @@
 export const screenInfo = {
-    'HOME': 0,
-    'GAME': 1
+    HOME: 0,
+    GAME: 1
 };
 
 export const DifficultyLevel = {
-    'EASY': 1,
-    'MEDIUM': 2,
-    'HARD': 3
+    EASY: 1,
+    MEDIUM: 2,
+    HARD: 3
 };
+export const LocalStorageIds = {
+    HISTORY: 'ff_history'
+}

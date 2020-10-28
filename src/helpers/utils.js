@@ -12,3 +12,9 @@ export const getDifficultyValue = difficultyLevel => {
             return;
     }
 }
+export const setInLocalStorage = (items) => {
+    localStorage.setItem('ff_history', JSON.stringify(items));
+}
+export const getFromLocalStorage = id => {
+    return JSON.parse(localStorage.getItem(id));
+}

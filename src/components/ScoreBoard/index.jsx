@@ -16,7 +16,7 @@ const ScoreBoard = ({ history }) => {
       <div className="header">SCORE BOARD</div>
       <div className="scrollable">
         {history.map(({ name, score }, i) => (
-          <div key={i} className="history-info">
+          <div key={i} className="history-info" title={name}>
             {history.length > 1 && maxIndex === i && (
               <div className="best">personal best</div>
             )}
