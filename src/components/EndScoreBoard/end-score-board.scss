@@ -5,25 +5,32 @@
   color: white;
   text-transform: uppercase;
   .game-no {
-    font-size: 70px;
+    font-size: 46px;
     font-weight: 500;
   }
   .end-score {
-    font-size: 118px;
+    font-size: 60px;
     font-weight: 500;
   }
   .new-high {
-    font-size: 53px;
+    font-size: 19px;
     font-weight: normal;
+    animation: blinker 1s linear infinite;
+  }
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
   }
   .play-again {
     color: $font-color;
     text-shadow: 0 0 16px rgba(0, 0, 0, 0.16);
-    font-size: 54px;
+    font-size: 34px;
     font-weight: 500;
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-top: 10px;
     img {
       margin-right: 25px;
     }

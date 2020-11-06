@@ -93,7 +93,7 @@ const GameScreen = () => {
     if (!userHistoryFromDb.length) {
       return true;
     }
-    return userHistoryFromDb.some(({ name, score }) => userScore > score);
+    return userHistoryFromDb.every(({ name, score }) => userScore > score);
   };
   const resetGameState = () => {
     const newHistory = userHistoryFromDb.concat({

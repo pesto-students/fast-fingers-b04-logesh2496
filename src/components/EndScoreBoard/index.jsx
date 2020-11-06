@@ -8,7 +8,8 @@ const EndScoreBoard = ({ gameNo, score, isNewHighScore, onPlayAgain }) => {
       <div className="end-score">{score}</div>
       {isNewHighScore && <div className="new-high">New High Score</div>}
       <div className="play-again" tabIndex={0} onClick={onPlayAgain}>
-        <img src="/images/ff_reload.svg" alt="reload" /> Play again
+        <img src="/images/ff_reload.svg" alt="reload" height="42px" /> Play
+        again
       </div>
     </div>
   );
