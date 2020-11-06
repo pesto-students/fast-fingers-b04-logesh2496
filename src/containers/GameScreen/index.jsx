@@ -21,8 +21,11 @@ const GameScreen = () => {
     (state) => state.userProperties
   );
   const userHistory = useSelector((state) => state.userHistory);
-  const userHistoryFromDb =
+  const multipleUsersHistoryFromDb =
     getFromLocalStorage(LocalStorageIds.HISTORY) || userHistory;
+  const userHistoryFromDb = multipleUsersHistoryFromDb.filter(
+    ({ name }) => userName === name
+  );
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
   const [inputWord, setInputWord] = useState("");
@@ -71,7 +74,7 @@ const GameScreen = () => {
     setIsGameEnded(true);
   };
   const onQuitGame = () => {
-    const newHistory = userHistoryFromDb.concat({
+    const newHistory = multipleUsersHistoryFromDb.concat({
       name: userName,
       score: userScore,
     });
@@ -81,7 +84,7 @@ const GameScreen = () => {
   };
   const handleTimerTick = () => {
     if (timer === 0) {
-      setIsGameEnded(true);
+      // setIsGameEnded(true);
     } else if (timer > 0) {
       setTimer(timer - 1);
     }
@@ -137,7 +140,7 @@ const GameScreen = () => {
         </div>
         {!isGameEnded && (
           <div className="score-board">
-            <ScoreBoard history={userHistoryFromDb} />
+            <ScoreBoard history={userHistoryFromDb} userName={userName} />
           </div>
         )}
         {isGameEnded ? (
