@@ -38,5 +38,5 @@ export const getWordForDifficulty = (difficultyLevel) => {
         const index = Math.floor(Math.random() * 172820 + 1);
         word = words[index];
     }
-    return word;
+    return word.toUpperCase();
 }

@@ -39,12 +39,12 @@ const GameScreen = () => {
   const [isGameEnded, setIsGameEnded] = useState(false);
 
   const handleWordInputChange = (e) => {
-    if (word === e.target.value) {
-      setUserScore(userScore + timer);
+    if (word === e.target.value.toUpperCase()) {
+      setUserScore(Math.round((userScore + timer) / 1000));
       setDifficultyFactor(difficultyFactor + 0.1);
       setInputWord("");
     } else {
-      setInputWord(e.target.value);
+      setInputWord(e.target.value.toUpperCase());
     }
   };
   const calculateAndSetWord = () => {
@@ -54,7 +54,7 @@ const GameScreen = () => {
       wordFromLibrary.length / difficultyFactor
     );
     const finalTime = calculatedTime > 2 ? calculatedTime : 2;
-    setTimer(finalTime);
+    setTimer(finalTime * 1000);
     setTotalTime(finalTime);
   };
   const calculateAndDifficultyFactor = () => {
@@ -86,9 +86,9 @@ const GameScreen = () => {
   };
   const handleTimerTick = () => {
     if (timer === 0) {
-      // setIsGameEnded(true);
+      setIsGameEnded(true);
     } else if (timer > 0) {
-      setTimer(timer - 1);
+      setTimer(timer - 10);
     }
   };
   const onPlayAgain = () => {
@@ -129,7 +129,7 @@ const GameScreen = () => {
     calculateAndDifficultyFactor();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const timerEvent = setInterval(handleTimerTick, 1000);
+    const timerEvent = setInterval(handleTimerTick, 10);
     return () => {
       clearTimeout(timerEvent);
     };
