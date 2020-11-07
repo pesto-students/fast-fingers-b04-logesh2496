@@ -13,8 +13,11 @@ import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
 import EndScoreBoard from "../../components/EndScoreBoard";
 import Timer from "../../components/Timer";
-import { getFromLocalStorage, setInLocalStorage } from "../../helpers/utils";
-const words = require("../../dictionary.json");
+import {
+  getFromLocalStorage,
+  getWordForDifficulty,
+  setInLocalStorage,
+} from "../../helpers/utils";
 
 const GameScreen = () => {
   const { difficultyLevel, userName } = useSelector(
@@ -45,8 +48,7 @@ const GameScreen = () => {
     }
   };
   const calculateAndSetWord = () => {
-    const arrIndex = Math.floor(Math.random() * 172820 + 1);
-    const wordFromLibrary = words[arrIndex];
+    const wordFromLibrary = getWordForDifficulty(difficultyLevel);
     setWord(wordFromLibrary);
     const calculatedTime = Math.round(
       wordFromLibrary.length / difficultyFactor
