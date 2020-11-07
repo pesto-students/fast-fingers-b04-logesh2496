@@ -40,7 +40,7 @@ const GameScreen = () => {
 
   const handleWordInputChange = (e) => {
     if (word === e.target.value.toUpperCase()) {
-      setUserScore(Math.round((userScore + timer) / 1000));
+      setUserScore(userScore + Math.round(timer / 1000));
       setDifficultyFactor(difficultyFactor + 0.1);
       setInputWord("");
     } else {
