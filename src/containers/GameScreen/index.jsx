@@ -13,16 +13,22 @@ import GameScore from "../../components/GameScore";
 import ScoreBoard from "../../components/ScoreBoard";
 import EndScoreBoard from "../../components/EndScoreBoard";
 import Timer from "../../components/Timer";
-import { getFromLocalStorage, setInLocalStorage } from "../../helpers/utils";
-const words = require("../../dictionary.json");
+import {
+  getFromLocalStorage,
+  getWordForDifficulty,
+  setInLocalStorage,
+} from "../../helpers/utils";
 
 const GameScreen = () => {
   const { difficultyLevel, userName } = useSelector(
     (state) => state.userProperties
   );
   const userHistory = useSelector((state) => state.userHistory);
-  const userHistoryFromDb =
+  const multipleUsersHistoryFromDb =
     getFromLocalStorage(LocalStorageIds.HISTORY) || userHistory;
+  const userHistoryFromDb = multipleUsersHistoryFromDb.filter(
+    ({ name }) => userName === name
+  );
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
   const [inputWord, setInputWord] = useState("");
@@ -33,23 +39,22 @@ const GameScreen = () => {
   const [isGameEnded, setIsGameEnded] = useState(false);
 
   const handleWordInputChange = (e) => {
-    if (word === e.target.value) {
-      setUserScore(userScore + timer);
+    if (word === e.target.value.toUpperCase()) {
+      setUserScore(Math.round((userScore + timer) / 1000));
       setDifficultyFactor(difficultyFactor + 0.1);
       setInputWord("");
     } else {
-      setInputWord(e.target.value);
+      setInputWord(e.target.value.toUpperCase());
     }
   };
   const calculateAndSetWord = () => {
-    const arrIndex = Math.floor(Math.random() * 172820 + 1);
-    const wordFromLibrary = words[arrIndex];
+    const wordFromLibrary = getWordForDifficulty(difficultyLevel);
     setWord(wordFromLibrary);
     const calculatedTime = Math.round(
       wordFromLibrary.length / difficultyFactor
     );
     const finalTime = calculatedTime > 2 ? calculatedTime : 2;
-    setTimer(finalTime);
+    setTimer(finalTime * 1000);
     setTotalTime(finalTime);
   };
   const calculateAndDifficultyFactor = () => {
@@ -71,7 +76,7 @@ const GameScreen = () => {
     setIsGameEnded(true);
   };
   const onQuitGame = () => {
-    const newHistory = userHistoryFromDb.concat({
+    const newHistory = multipleUsersHistoryFromDb.concat({
       name: userName,
       score: userScore,
     });
@@ -83,7 +88,7 @@ const GameScreen = () => {
     if (timer === 0) {
       setIsGameEnded(true);
     } else if (timer > 0) {
-      setTimer(timer - 1);
+      setTimer(timer - 10);
     }
   };
   const onPlayAgain = () => {
@@ -93,7 +98,7 @@ const GameScreen = () => {
     if (!userHistoryFromDb.length) {
       return true;
     }
-    return userHistoryFromDb.some(({ name, score }) => userScore > score);
+    return userHistoryFromDb.every(({ name, score }) => userScore > score);
   };
   const resetGameState = () => {
     const newHistory = userHistoryFromDb.concat({
@@ -124,7 +129,7 @@ const GameScreen = () => {
     calculateAndDifficultyFactor();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const timerEvent = setInterval(handleTimerTick, 1000);
+    const timerEvent = setInterval(handleTimerTick, 10);
     return () => {
       clearTimeout(timerEvent);
     };
@@ -137,7 +142,7 @@ const GameScreen = () => {
         </div>
         {!isGameEnded && (
           <div className="score-board">
-            <ScoreBoard history={userHistoryFromDb} />
+            <ScoreBoard history={userHistoryFromDb} userName={userName} />
           </div>
         )}
         {isGameEnded ? (

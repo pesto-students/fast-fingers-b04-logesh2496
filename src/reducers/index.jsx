@@ -13,7 +13,7 @@ const userProperties = (store, action) => {
   if (action.type === "USER_PROPERTIES") {
     return action.value;
   }
-  return store || { difficultyLevel: DifficultyLevel.EASY, userName: "YOLO" };
+  return store || { difficultyLevel: DifficultyLevel.EASY };
 };
 const userHistory = (store, action) => {
   if (action.type === "USER_HISTORY") {

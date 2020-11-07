@@ -5,7 +5,8 @@ const calculateTimeFraction = (timeLeft, totalTime) => {
   return timeLeft / totalTime;
 };
 const Timer = ({ timer, totalTime }) => {
-  const circleDasharray = calculateTimeFraction(timer, totalTime) * 283;
+  const circleDasharray =
+    calculateTimeFraction(Math.round(timer / 1000), totalTime) * 283;
   return (
     <div className="base-timer">
       <svg
@@ -29,7 +30,13 @@ const Timer = ({ timer, totalTime }) => {
         </g>
       </svg>
       <span id="base-timer-label" className="base-timer__label">
-        {timer}
+        {!timer ? (
+          "-- : --"
+        ) : (
+          <>
+            0{parseInt(timer / 1000)} : {timer.toString().slice(1, 3)}{" "}
+          </>
+        )}
       </span>
     </div>
   );

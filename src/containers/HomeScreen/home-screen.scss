@@ -37,6 +37,23 @@
       box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
       padding-left: 15px;
     }
+    &.invalid {
+      outline: red;
+      ::placeholder {
+        color: red;
+        opacity: 1; /* Firefox */
+      }
+
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: red;
+      }
+
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: red;
+      }
+    }
   }
   .difficulty-chooser {
     select {
