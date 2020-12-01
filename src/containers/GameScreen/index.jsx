@@ -40,7 +40,7 @@ const GameScreen = () => {
 
   const handleWordInputChange = (e) => {
     if (word === e.target.value.toUpperCase()) {
-      setUserScore(Math.round((userScore + timer) / 1000));
+      setUserScore(userScore + Math.round(timer / 1000));
       setDifficultyFactor(difficultyFactor + 0.1);
       setInputWord("");
     } else {
@@ -157,12 +157,17 @@ const GameScreen = () => {
       </div>
       <div className="game-play">
         {isGameEnded ? (
-          <EndScoreBoard
-            gameNo={userHistoryFromDb.length + 1}
-            score={userScore}
-            isNewHighScore={checkIfHighScore()}
-            onPlayAgain={onPlayAgain}
-          />
+          <>
+            <EndScoreBoard
+              gameNo={userHistoryFromDb.length + 1}
+              score={userScore}
+              isNewHighScore={checkIfHighScore()}
+              onPlayAgain={onPlayAgain}
+            />
+            <div className="quit mobile" onClick={onQuitGame}>
+              Quit
+            </div>
+          </>
         ) : (
           <>
             <div className="game-timer">
@@ -176,6 +181,15 @@ const GameScreen = () => {
               onChange={handleWordInputChange}
               value={inputWord}
             ></input>
+            {isGameEnded ? (
+          <div className="quit mobile" onClick={onQuitGame}>
+            Quit
+          </div>
+        ) : (
+          <div className="stop-game mobile" onClick={onStopGame} tabIndex={0}>
+            <span className={"close-icon"}>x</span> STOP GAME
+          </div>
+        )}
           </>
         )}
       </div>
