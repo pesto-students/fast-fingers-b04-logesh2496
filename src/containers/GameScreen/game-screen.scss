@@ -130,6 +130,9 @@
     display: flex;
     justify-content: space-around;
   }
+  .quit {
+    display: none;
+  }
 
   .quit.mobile {
     display: initial;
