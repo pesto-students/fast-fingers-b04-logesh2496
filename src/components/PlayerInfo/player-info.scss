@@ -1,0 +1,10 @@
+.player-name,
+.level {
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  img {
+    margin-right: 8px;
+  }
+}
